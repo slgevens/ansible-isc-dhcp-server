@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: Evens SOLIGNAC
+  company: Epiconcept
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+  - name: Ubuntu
+    versions:
+      - precise
+      - quantal
+      - raring
+      - saucy
+      - trusty
+      - xenial 
+  - name: Debian
+    versions:
+      - Jessie      
+  categories:
+  - system
+  - networking
+dependencies: []
+...

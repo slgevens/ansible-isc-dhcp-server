@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+# DO NOT EDIT MANUALLY
+
+{% if dhcp_interfaces is defined %}
+INTERFACES="{{ dhcp_interfaces }}"
+{% endif %}

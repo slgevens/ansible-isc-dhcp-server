@@ -1,0 +1,157 @@
+# {{ ansible_managed }}
+# DO NOT EDIT MANUALLY
+
+{% if dhcp_common_domain is defined %}
+option domain-name "{{ dhcp_common_domain }}";
+{% endif %}
+{% if dhcp_common_nameservers is defined %}
+option domain-name-servers {{ dhcp_common_nameservers }};
+{% endif %}
+{% if dhcp_common_default_lease_time is defined %}
+default-lease-time {{ dhcp_common_default_lease_time }};
+{% endif %}
+{% if dhcp_common_max_lease_time is defined %}
+max-lease-time {{ dhcp_common_max_lease_time }};
+{% endif %}
+{% if dhcp_log_facility is defined %}
+log-facility {{ dhcp_log_facility }};
+{% endif %}
+{% if dhcp_authoritative %}
+authoritative;
+{% endif %}
+
+{% if dhcp_ddns_updates is defined %}
+ddns-updates on;
+{% else %}
+ddns-updates off;
+{% endif %}
+{% if dhcp_ddns_updates_style is defined %}
+ddns-update-style {{ dhcp_ddns_update_style }};
+{% endif %}
+
+{% if dhcp_failover is defined %}
+failover peer "{{ dhcp_failover }}" {
+{% if dhcp_failover_primary is defined  %}
+   primary;
+{% endif %}
+{% if dhcp_failover_secondary is defined  %}
+   secondary;
+{% endif %}
+   address {{ dhcp_failover_address }};
+   port {{ dhcp_failover_port }};
+   peer address {{ dhcp_failover_peer_address }};
+   peer port {{ dhcp_failover_peer_port }};
+   max-response-delay {{ dhcp_failover_max_response_delay }};
+   max-unacked-updates {{ dhcp_failover_max_unacked_updates }};
+{% if dhcp_failover_mclt is defined %}
+   mclt {{ dhcp_failover_mclt }};
+{% endif %}
+{% if dhcp_failover_split is defined %}
+   split {{ dhcp_failover_split }};
+{% endif %}
+   load balance max seconds 3;
+}
+{% endif %}
+
+{% if dhcp_subnet_configuration is defined %}
+{% for s in dhcp_subnet_configuration %}
+subnet {{ s.subnet_base }} netmask {{ s.subnet_netmask }} {
+{% if s.subnet_pool is defined %}
+pool{
+{% if s.subnet_pool_failover is defined %}
+   failover peer "{{ s.subnet_pool_failover }}";
+{% endif %}
+{% if s.subnet_pool_range_start is defined %}
+   range {{ s.subnet_pool_range_start }} {{ s.subnet_pool_range_end }};
+{% endif %}
+{% if s.subnet_pool_routers is defined %}
+   option routers {{ s.subnet_pool_routers }};
+{% endif %}
+{% if s.subnet_pool_broadcast_address is defined %}
+   option broadcast-address {{ s.subnet_pool_broadcast_address }};
+{% endif %}
+{% if s.subnet_pool_domain_name_servers is defined %}
+   option domain-name-servers {{ s.subnet_pool_domain_name_servers }};
+{% endif %}
+{% if s.subnet_pool_domain_name is defined %}
+   option domain-name "{{ s.subnet_pool_domain_name }}";
+{% endif %}
+{% if s.subnet_pool_domain_search is defined %}
+   option domain-search "{{ s.subnet_pool_domain_search }}";
+{% endif %}
+{% if s.subnet_pool_ntp is defined %}
+   option ntp-servers {{ s.subnet_pool_ntp }};
+{% endif %}
+{% if s.subnet_pool_default_lease_time is defined %}
+   default-lease-time {{ s.subnet_pool_default_lease_time }};
+{% endif %}       
+{% if s.subnet_pool_max_lease_time is defined %}
+   max-lease-time {{ s.subnet_pool_max_lease_time }};
+{% endif %}}
+{% endif %}
+ 
+{% if s.subnet_range_start is defined %}
+range {{ s.subnet_range_start }} {{ s.subnet_range_end }};
+{% endif %}
+{% if s.subnet_routers is defined %}
+   option routers {{ s.subnet_routers }};
+{% endif %}
+{% if s.subnet_broadcast_address is defined %}
+   option broadcast-address {{ s.subnet_broadcast_address }};
+{% endif %}
+{% if s.subnet_domain_name_servers is defined %}
+   option domain-name-servers {{ s.subnet_domain_name_servers }};
+{% endif %}
+{% if s.subnet_domain_name is defined %}
+   option domain-name {{ s.subnet_domain_name }};
+{% endif %}
+{% if s.subnet_domain_search is defined %}
+   option domain-search {{ s.subnet_domain_search }};
+{% endif %}
+{% if s.subnet_ntp is defined %}
+   option ntp-servers {{ s.subnet_ntp }};
+{% endif %}
+{% if s.subnet_default_lease_time is defined %}
+   default-lease-time {{ s.subnet_default_lease_time }};
+{% endif %}       
+{% if s.subnet_max_lease_time is defined %}
+   max-lease-time {{ s.subnet_max_lease_time }};
+{% endif %}}              				   
+{% endfor %}
+{% endif %}
+
+{% if dhcp_hosts_configuration is defined %}
+{% for h in dhcp_hosts_configuration %}
+host {{ h.hosts_name }} {
+{% if h.comment is defined %} # {{ h.comment }}
+{% endif %}
+{% if h.mac_address is defined %}
+   hardware ethernet {{ h.mac_address }};
+{% endif %}
+{% if h.fixed_address is defined %}
+   fixed-address {{ h.fixed_address }};
+{% endif %}
+{% if h.routers is defined %}
+   option routers {{ h.routers }};
+{% endif %}
+{% if h.broadcast_address is defined %}
+   option broadcast-address {{ h.broadcast_address }};
+{% endif %}
+{% if h.domain_nameservers is defined %}
+   option domain-name-servers {{ h.domain_nameservers }};
+{% endif %}
+{% if h.domain_name is defined %}
+   option domain-name "{{ h.domain_name }}";
+{% endif %}
+{% if h.domain_search is defined %}
+   option domain-search "{{ h.domain_search }}";
+{% endif %}
+{% if h.default_lease_time is defined %}
+   default-lease-time {{ h.default_lease_time }};
+{% endif %}
+{% if h.max_lease_time is defined %}
+   max-lease-time {{ h.max_lease_time }};
+{% endif %}
+}
+{% endfor %}
+{% endif %}
