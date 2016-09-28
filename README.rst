@@ -73,7 +73,8 @@ Playbook example
 License
 =========
 
-MIT__
+MIT_
+
 .. _MIT: LICENSE
 
 Author
