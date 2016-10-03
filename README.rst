@@ -60,11 +60,11 @@ Playbook example
    
    dhcp_hosts_configuration:
 
-   - hosts_name: vbox85
+   - name: vbox85
      mac_address: "08:00:ee:28:ge:33"
      fixed_address: debian85.evens.tld
 
-   - hosts_name: vbox82c
+   - name: vbox82c
      mac_address: "08:ee:27:3c:d5:bc"
      fixed_address: debian82c.evens.tld
 
