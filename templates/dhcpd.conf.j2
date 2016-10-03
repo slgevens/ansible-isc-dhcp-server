@@ -122,7 +122,7 @@ range {{ s.subnet_range_start }} {{ s.subnet_range_end }};
 
 {% if dhcp_hosts_configuration is defined %}
 {% for h in dhcp_hosts_configuration %}
-host {{ h.hosts_name }} {
+host {{ h.name }} {
 {% if h.comment is defined %} # {{ h.comment }}
 {% endif %}
 {% if h.mac_address is defined %}
