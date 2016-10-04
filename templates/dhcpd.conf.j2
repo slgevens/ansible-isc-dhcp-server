@@ -119,10 +119,10 @@ range {{ s.subnet_range_start }} {{ s.subnet_range_end }};
    option domain-name-servers {{ s.subnet_domain_name_servers }};
 {% endif %}
 {% if s.subnet_domain_name is defined %}
-   option domain-name {{ s.subnet_domain_name }};
+   option domain-name "{{ s.subnet_domain_name }}";
 {% endif %}
 {% if s.subnet_domain_search is defined %}
-   option domain-search {{ s.subnet_domain_search }};
+   option domain-search "{{ s.subnet_domain_search }}";
 {% endif %}
 {% if s.subnet_ntp is defined %}
    option ntp-servers {{ s.subnet_ntp }};
