@@ -30,7 +30,7 @@ ddns-updates on;
 {% else %}
 ddns-updates off;
 {% endif %}
-{% if dhcp_ddns_updates_style is defined %}
+{% if dhcp_ddns_update_style is defined %}
 ddns-update-style {{ dhcp_ddns_update_style }};
 {% else %}
 ddns-update-style none;
