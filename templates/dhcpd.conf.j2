@@ -13,6 +13,11 @@ default-lease-time {{ dhcp_common_default_lease_time }};
 {% if dhcp_common_max_lease_time is defined %}
 max-lease-time {{ dhcp_common_max_lease_time }};
 {% endif %}
+{% if dhcp_update_static_leases %}
+update-static-leases on;
+{% else %}
+update-static-leases off;
+{% endif %}
 {% if dhcp_log_facility is defined %}
 log-facility {{ dhcp_log_facility }};
 {% endif %}
@@ -20,13 +25,15 @@ log-facility {{ dhcp_log_facility }};
 authoritative;
 {% endif %}
 
-{% if dhcp_ddns_updates is defined %}
+{% if dhcp_ddns_updates %}
 ddns-updates on;
 {% else %}
 ddns-updates off;
 {% endif %}
 {% if dhcp_ddns_updates_style is defined %}
 ddns-update-style {{ dhcp_ddns_update_style }};
+{% else %}
+ddns-update-style none;
 {% endif %}
 
 {% if dhcp_failover is defined %}
