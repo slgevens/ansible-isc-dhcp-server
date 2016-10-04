@@ -42,6 +42,8 @@ key {{ key.name }} {
   algorithm hmac-md5;
   secret {{ key.value }};
 }
+{% endfor %}
+{% endif %}
 
 {% if dhcp_failover is defined %}
 failover peer "{{ dhcp_failover }}" {
