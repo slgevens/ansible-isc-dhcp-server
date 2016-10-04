@@ -36,6 +36,13 @@ ddns-update-style {{ dhcp_ddns_update_style }};
 ddns-update-style none;
 {% endif %}
 
+{% if dhcp_ddns_keys is defined %}
+{% for key in dhcp_ddns_keys %}
+key {{ key.name }} {
+  algorithm hmac-md5;
+  secret {{ key.value }};
+}
+
 {% if dhcp_failover is defined %}
 failover peer "{{ dhcp_failover }}" {
 {% if dhcp_failover_primary is defined  %}
